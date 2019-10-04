@@ -34,7 +34,7 @@ namespace gamewebapi{
                 Id = Guid.NewGuid(),
                 Name = player.Name
             };
-            players.allPlayers.Add(newplayer);
+            players.allPlayers.Add(newplayer); // heittää nullreferencen atm
             File.WriteAllText("game_dev.txt", JsonConvert.SerializeObject(players));
             return Task.FromResult(newplayer);
         }
