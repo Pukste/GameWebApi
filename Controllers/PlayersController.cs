@@ -25,7 +25,7 @@ namespace gamewebapi
         }
         [HttpPost]
         [Route("")]
-        public Task<Player> Create(NewPlayer player){
+        public async Task<Player> Create(NewPlayer player){
             //_logger.LogInformation("Creating player with name " + newPlayer.Name);
             var newplayer = new Player()
             {
@@ -33,7 +33,7 @@ namespace gamewebapi
                 Name = player.Name
             };
             //await _repository.Create(newplayer);
-            return  _repository.Create(newplayer);
+            return await _repository.Create(newplayer);
         }
         [HttpPost]
         [Route("{playerId}")]
