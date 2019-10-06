@@ -27,15 +27,16 @@ namespace gamewebapi{
             return Task.FromResult(players.allPlayers.ToArray());
         }
         public Task<Player> Create(Player player){
-            string _repository = File.ReadAllText("game_dev.txt", Encoding.Default);
-            PlayerList players = JsonConvert.DeserializeObject<PlayerList>(_repository);
+            string[] _repository = File.ReadAllLines("game_dev.txt", Encoding.Default);
+           // PlayerList players = JsonConvert.DeserializeObject<PlayerList>(_repository);
             var newplayer = new Player()
             {
                 Id = Guid.NewGuid(),
                 Name = player.Name
             };
-            players.allPlayers.Add(newplayer); // heittää nullreferencen atm
-            File.WriteAllText("game_dev.txt", JsonConvert.SerializeObject(players));
+           // players.allPlayers.Add(newplayer); // heittää nullreferencen atm
+           File.AppendAllText("game_dev.txt", JsonConvert.SerializeObject(newplayer));
+            //File.WriteAllText("game_dev.txt", JsonConvert.SerializeObject(players));
             return Task.FromResult(newplayer);
         }
         public Task<Player> Modify(Guid id, ModifiedPlayer player){

@@ -8,7 +8,7 @@ namespace gamewebapi
     [ApiController]
     public class PlayerController{
 
-        private readonly IRepository _repository;
+        private IRepository _repository;
 
         public PlayerController(IRepository repository) => _repository = repository;
 
