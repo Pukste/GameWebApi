@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Text;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace gamewebapi{
     public class FileRepository: IRepository{
@@ -20,11 +21,13 @@ namespace gamewebapi{
             return null;
         }
         public Task<Player[]> GetAll(){
-            string _repository = File.ReadAllText("game_dev.txt", Encoding.Default);
-            PlayerList players = JsonConvert.DeserializeObject<PlayerList>(_repository);
+            string[] _repository = File.ReadAllLines("game_dev.txt", Encoding.Default);
+            List<Player> plist = new List<Player>();
+            foreach(var player in _repository){
+                plist.Add(JsonConvert.DeserializeObject<Player>(player));
+            }
             
-            
-            return Task.FromResult(players.allPlayers.ToArray());
+            return Task.FromResult(plist.ToArray());
         }
         public Task<Player> Create(Player player){
             string[] _repository = File.ReadAllLines("game_dev.txt", Encoding.Default);
@@ -34,9 +37,11 @@ namespace gamewebapi{
                 Id = Guid.NewGuid(),
                 Name = player.Name
             };
+            List<string> newlist = _repository.ToList();
+            newlist.Add(JsonConvert.SerializeObject(newplayer));
            // players.allPlayers.Add(newplayer); // heittää nullreferencen atm
-           File.AppendAllText("game_dev.txt", JsonConvert.SerializeObject(newplayer));
-            //File.WriteAllText("game_dev.txt", JsonConvert.SerializeObject(players));
+            //File.AppendAllText("game_dev.txt", JsonConvert.SerializeObject(newplayer));
+            File.WriteAllLines("game_dev.txt", newlist.ToArray());
             return Task.FromResult(newplayer);
         }
         public Task<Player> Modify(Guid id, ModifiedPlayer player){
