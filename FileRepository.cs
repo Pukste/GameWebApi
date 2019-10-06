@@ -11,11 +11,12 @@ namespace gamewebapi{
         
         
         public Task<Player> Get(Guid id){
-            string _repository = File.ReadAllText("game_dev.txt", Encoding.Default);
-            PlayerList players = JsonConvert.DeserializeObject<PlayerList>(_repository);
-            foreach(var player in players.allPlayers){
-                if(player.Id == id){
-                    return Task.FromResult(player);
+            string[] _repository = File.ReadAllLines("game_dev.txt", Encoding.Default);
+            foreach(var player in _repository){
+                Console.WriteLine(player);
+                var p =JsonConvert.DeserializeObject<Player>(player);
+                if(p.Id == id){
+                    return Task.FromResult(p);
                 }
             }
             return null;
