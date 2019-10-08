@@ -1,4 +1,3 @@
 {"Id":"77f25325-9e41-4d96-a1bf-f54d4180394f","Name":"test","Score":0,"Level":0,"IsBanned":false,"CreationTime":"0001-01-01T00:00:00"}
-{"Id":"cdf8fa90-9564-4392-80ac-3f283f272fa1","Name":"test","Score":0,"Level":0,"IsBanned":false,"CreationTime":"0001-01-01T00:00:00"}
 {"Id":"5e2d9a9f-db82-44e8-82cc-cf2c9c29d77c","Name":"test","Score":0,"Level":0,"IsBanned":false,"CreationTime":"0001-01-01T00:00:00"}
 {"Id":"2988918a-cfd7-4337-b821-bf79beb0a7f7","Name":"test","Score":0,"Level":0,"IsBanned":false,"CreationTime":"0001-01-01T00:00:00"}

@@ -11,6 +11,7 @@ namespace gamewebapi{
         
         
         public Task<Player> Get(Guid id){
+            
             string[] _repository = File.ReadAllLines("game_dev.txt", Encoding.Default);
             foreach(var player in _repository){
                 var p =JsonConvert.DeserializeObject<Player>(player);

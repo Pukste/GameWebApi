@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace gamewebapi
 {
-    [Route("api/players")]
+    [Route("api/players/")]
     [ApiController]
     public class PlayerController{
 
@@ -15,8 +15,8 @@ namespace gamewebapi
 
         [HttpGet]
         [Route("{playerId}")]
-        public Task<Player> Get(Guid id){
-             return _repository.Get(id);
+        public async Task<Player> Get(Guid id){
+            return await _repository.Get(id);
         }
         [HttpGet]
         [Route("")]
