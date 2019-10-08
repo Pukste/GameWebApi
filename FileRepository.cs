@@ -19,7 +19,7 @@ namespace gamewebapi{
                     return Task.FromResult(p);
                 }
             }
-            return null;
+            throw new KeyNotFoundException();
         }
         public Task<Player[]> GetAll(){
             string[] _repository = File.ReadAllLines("game_dev.txt", Encoding.Default);
@@ -57,7 +57,7 @@ namespace gamewebapi{
                     return Task.FromResult(p);
                 }
             }
-            return null;
+            throw new KeyNotFoundException();
         }
         public Task<Player> Delete(Guid id){
             Player deletedPlayer = new Player();
@@ -79,5 +79,114 @@ namespace gamewebapi{
             return Task.FromResult(deletedPlayer);
             
         }
+
+        public Task<Item> CreateItem(Guid playerId, Item item)
+        {
+            string[] _repository = File.ReadAllLines("game_dev.txt", Encoding.Default);
+            foreach(var player in _repository){
+                var p =JsonConvert.DeserializeObject<Player>(player);
+                if(p.Id == playerId){
+                    item.Id= Guid.NewGuid();
+                    p.Items.Add(item);
+                    return Task.FromResult(item);
+                }
+            }
+            throw new KeyNotFoundException();
+        }
+
+        public Task<Item> GetItem(Guid playerId, Guid itemId)
+        {
+            string[] _repository = File.ReadAllLines("game_dev.txt", Encoding.Default);
+            foreach(var player in _repository){
+                var p =JsonConvert.DeserializeObject<Player>(player);
+                if(p.Id == playerId){
+                    foreach(var item in p.Items){
+                        if(item.Id == itemId){
+                            return Task.FromResult(item);
+                        }
+                    }     
+                }
+            }
+            throw new KeyNotFoundException();
+        }
+
+        public Task<Item[]> GetAllItems(Guid playerId)
+        {
+            string[] _repository = File.ReadAllLines("game_dev.txt", Encoding.Default);
+            foreach(var player in _repository){
+                var p =JsonConvert.DeserializeObject<Player>(player);
+                if(p.Id == playerId){
+                    return Task.FromResult(p.Items.ToArray());
+                }
+            }
+            throw new KeyNotFoundException();
+        }
+
+        public Task<Item> UpdateItem(Guid playerId, Item item)
+        {
+            string[] _repository = File.ReadAllLines("game_dev.txt", Encoding.Default);
+            List<Player> newlist = new List<Player>();
+            foreach(var player in _repository){
+                var p =JsonConvert.DeserializeObject<Player>(player);
+                newlist.Add(p);
+            }
+            foreach(var p in newlist){
+                if(p.Id == playerId){
+                    foreach(var it in p.Items){
+                        if(it.Id == item.Id){
+                            p.Items.Remove(it);
+                            p.Items.Add(item);
+                        }
+                        
+
+                    }
+                    savefile();
+                    return Task.FromResult(item);   
+                }
+                
+            }
+            void savefile(){
+                string[] newarray = new string[newlist.Count];
+                for(int i=0; i<newlist.Count; i++){
+                    newarray[i] = JsonConvert.SerializeObject(newlist[i]);
+                }
+                File.WriteAllLines("game_dev.txt", newarray);
+            }
+            throw new KeyNotFoundException();
+        }
+
+        public Task<Item> DeleteItem(Guid playerId, Item item)
+        {
+            string[] _repository = File.ReadAllLines("game_dev.txt", Encoding.Default);
+            List<Player> newlist = new List<Player>();
+            foreach(var player in _repository){
+                var p =JsonConvert.DeserializeObject<Player>(player);
+                newlist.Add(p);
+            }
+            foreach(var p in newlist){
+                if(p.Id == playerId){
+                    foreach(var it in p.Items){
+                        if(it.Id == item.Id){
+                            p.Items.Remove(it);
+                            
+                        }
+                        
+
+                    }
+                    savefile();
+                    return Task.FromResult(item);   
+                }
+                
+            }
+            void savefile(){
+                string[] newarray = new string[newlist.Count];
+                for(int i=0; i<newlist.Count; i++){
+                    newarray[i] = JsonConvert.SerializeObject(newlist[i]);
+                }
+                File.WriteAllLines("game_dev.txt", newarray);
+            }
+            throw new KeyNotFoundException();
+        }
+
     }
 }
