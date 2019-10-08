@@ -30,7 +30,8 @@ namespace gamewebapi
             var newplayer = new Player()
             {
                 Id = Guid.NewGuid(),
-                Name = player.Name
+                Name = player.Name,
+                CreationTime = DateTime.Now
             };
             //await _repository.Create(newplayer);
             return await _repository.Create(newplayer);

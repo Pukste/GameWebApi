@@ -18,7 +18,8 @@ namespace gamewebapi
             var newitem = new Item(){
                 Id = Guid.NewGuid(),
                 ItemType = item.ItemType,
-                Price = item.Price
+                Price = item.Price,
+                CreationTime = DateTime.Now
             };
             return _itemrepository.CreateItem(playerId, newitem);
         }
