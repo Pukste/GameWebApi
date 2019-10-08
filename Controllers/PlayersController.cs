@@ -45,32 +45,7 @@ namespace gamewebapi
         public Task<Player> Delete(Guid id){
             return _repository.Delete(id);
         }
-        [HttpPost]
-        [Route("{playerId}/items/")]
-        public Task<Item> CreateItem(Guid playerId, Item item){
-            throw new NotImplementedException();
-        }
-        [HttpGet]
-        [Route("{playerId}/items/{itemId}")]
-        public Task<Item> GetItem(Guid playerId, Guid itemId){
-            throw new NotImplementedException();
-        }
-        [HttpGet]
-        [Route("{playerId}/items/")]
-        public Task<Item[]> GetAllItems(Guid playerId){
-            throw new NotImplementedException();
-        }
-        [HttpPost]
-        [Route("{playerId}/items/{itemId}")]
-        public Task<Item> UpdateItem(Guid playerId, Item item){
-            throw new NotImplementedException();
-        }
-        [HttpDelete]
-        [Route("{playerId}/items/{itemId}")]
-        public Task<Item> DeleteItem(Guid playerId, Item item){
-            throw new NotImplementedException();
-        }
-            
+        
             
     }
 }
