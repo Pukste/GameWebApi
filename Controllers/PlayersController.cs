@@ -38,7 +38,7 @@ namespace gamewebapi
         }
         [HttpPost]
         [Route("{playerId}")]
-        public Task<Player> Modify(Guid id, ModifiedPlayer modifiedPlayer){
+        public Task<Player> Modify(Guid id, Player modifiedPlayer){
             return _repository.Modify(id, modifiedPlayer);
         }
         [HttpDelete]

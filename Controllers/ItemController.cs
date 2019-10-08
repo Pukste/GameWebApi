@@ -41,12 +41,12 @@ namespace gamewebapi
         }
         [HttpPost]
         [Route("{itemId}")]
-        public Task<Item> UpdateItem(Guid playerId, Guid itemId, UpdateItem item){
+        public Task<Item> UpdateItem(Guid playerId, Guid itemId, Item item){
             return _itemrepository.UpdateItem(playerId, itemId, item);
         }
         [HttpDelete]
         [Route("{itemId}")]
-        public Task<Item> DeleteItem(Guid playerId, Item item){
+        public Task<Item> DeleteItem(Guid playerId, Guid item){
             return _itemrepository.DeleteItem(playerId, item);
         }
 

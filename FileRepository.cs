@@ -45,7 +45,7 @@ namespace gamewebapi{
             File.WriteAllLines("game_dev.txt", newlist.ToArray());
             return Task.FromResult(newplayer);
         }
-        public Task<Player> Modify(Guid id, ModifiedPlayer player){
+        public Task<Player> Modify(Guid id, Player player){
 
             string[] _repository = File.ReadAllLines("game_dev.txt", Encoding.Default);
             for(int i = 0; i<_repository.Length; i++){
@@ -124,7 +124,7 @@ namespace gamewebapi{
             throw new KeyNotFoundException();
         }
 
-        public Task<Item> UpdateItem(Guid playerId,Guid itemId, UpdateItem item)
+        public Task<Item> UpdateItem(Guid playerId,Guid itemId, Item item)
         {
             string[] _repository = File.ReadAllLines("game_dev.txt", Encoding.Default);
             for(int i = 0; i<_repository.Length; i++){
@@ -149,7 +149,7 @@ namespace gamewebapi{
             throw new KeyNotFoundException();
         }
 
-        public Task<Item> DeleteItem(Guid playerId, Item item)
+        public Task<Item> DeleteItem(Guid playerId, Guid itemId)
         {
             string[] _repository = File.ReadAllLines("game_dev.txt", Encoding.Default);
             List<Player> newlist = new List<Player>();
@@ -157,10 +157,12 @@ namespace gamewebapi{
                 var p =JsonConvert.DeserializeObject<Player>(player);
                 newlist.Add(p);
             }
+            Item _item = new Item();
             foreach(var p in newlist){
                 if(p.Id == playerId){
                     foreach(var it in p.Items){
-                        if(it.Id == item.Id){
+                        if(it.Id == itemId){
+                            _item = it;
                             p.Items.Remove(it);
                             
                         }
@@ -168,7 +170,7 @@ namespace gamewebapi{
 
                     }
                     savefile();
-                    return Task.FromResult(item);   
+                    return Task.FromResult(_item);   
                 }
                 
             }

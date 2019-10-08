@@ -7,14 +7,14 @@ namespace gamewebapi{
     Task<Player> Get(Guid id);
     Task<Player[]> GetAll();
     Task<Player> Create(Player player);
-    Task<Player> Modify(Guid id, ModifiedPlayer player);
+    Task<Player> Modify(Guid id, Player player);
     Task<Player> Delete(Guid id);
 
     
     Task<Item> CreateItem(Guid playerId, Item item);
     Task<Item> GetItem(Guid playerId, Guid itemId);
     Task<Item[]> GetAllItems(Guid playerId);
-    Task<Item> UpdateItem(Guid playerId,Guid itemId, UpdateItem item);
-    Task<Item> DeleteItem(Guid playerId, Item item);
+    Task<Item> UpdateItem(Guid playerId,Guid itemId, Item item);
+    Task<Item> DeleteItem(Guid playerId, Guid itemId);
 }
 }
