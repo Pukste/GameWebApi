@@ -62,7 +62,7 @@
             },
             "MongoDB.Driver": {
               "target": "Package",
-              "version": "(, )"
+              "version": "[2.9.2, )"
             },
             "NewtonSoft.Json": {
               "target": "Package",

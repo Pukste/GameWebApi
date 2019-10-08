@@ -15,14 +15,14 @@ namespace gamewebapi
         public MongoDbRepository()
         {
             var mongoClient = new MongoClient("mongodb://localhost:27017");
-            var database = mongoClient.GetDatabase("Game");
+            var database = mongoClient.GetDatabase("name");
             _collection = database.GetCollection<Player>("players");
         }
  
         public async Task<Player> Create(Player player)
         {
             player.Id = Guid.NewGuid();
- 
+            player.CreationTime = DateTime.Now;
             await _collection.InsertOneAsync(player);
             return player;
         }
@@ -32,12 +32,10 @@ namespace gamewebapi
             newItem.Id = Guid.NewGuid();
  
             var filter = Builders<Player>.Filter.Eq(p => p.Id, id);
-            var playerCursor = await _collection.FindAsync(filter);
-            Player player = await playerCursor.FirstAsync();
+            var update = Builders<Player>.Update.Push(e => e.Items, newItem);
+            await _collection.FindOneAndUpdateAsync(filter,update);
  
-            player.Items.Add(newItem);
- 
-            return player.Items.Last();
+            return newItem;
         }
  
         public async Task<Player> Delete(Guid id)
@@ -51,23 +49,23 @@ namespace gamewebapi
             return player;
         }
  
+        // not working yet..
         public async Task<Item> DeleteItem(Guid id, Guid itemId)
         {
             var filter = Builders<Player>.Filter.Eq(p => p.Id, id);
             var playerCursor = await _collection.FindAsync(filter);
             Player player = await playerCursor.FirstAsync();
- 
+            Item olditem = new Item();
             for (int i = 0; i < player.Items.Count; i++)
             {
                 if (player.Items[i].Id == itemId)
                 {
-                    Item deletedItem = player.Items[i];
-                    player.Items.RemoveAt(i);
-                    return deletedItem;
+                    olditem = player.Items[i];
                 }
             }
- 
-            return null;
+            var update = Builders<Player>.Update.PullFilter(p =>p.Items, f=>f.Id == itemId);
+            await _collection.FindOneAndUpdateAsync(p => p.Id == id,update);
+            return olditem;
         }
  
         public async Task<Player> Get(Guid id)
@@ -111,14 +109,15 @@ namespace gamewebapi
             return player.Items.ToArray();
         }
  
-        
+        //replacing the current player completely atm
         public async Task<Player> Modify(Guid id, Player player)
         {
-            var filter = Builders<Player>.Filter.Eq(p => p.Id, id);
-            await _collection.ReplaceOneAsync(filter,player);
+            player.Id=id;
+            await _collection.ReplaceOneAsync(p => p.Id == id ,player);
             return player;
         }
- 
+
+        // replacing the current item completely atm also not working.       
         public async Task<Item> UpdateItem(Guid id, Guid itemId, Item updateItem) 
         {
  
@@ -132,6 +131,8 @@ namespace gamewebapi
                 {
                     Item oldItem = player.Items[i];
                     player.Items[i] = updateItem;
+                    var update = Builders<Player>.Update.PullFilter(p =>p.Items, f=>f.Id == itemId);
+                    await _collection.FindOneAndUpdateAsync(filter,update);
                     return oldItem;
                 }
             }
