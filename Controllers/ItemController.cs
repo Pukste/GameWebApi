@@ -15,32 +15,32 @@ namespace gamewebapi
         [HttpPost]
         [Route("")]
         public Task<Item> CreateItem(Guid playerId, NewItem item){
-            var newit = new Item(){
+            var newitem = new Item(){
                 Id = Guid.NewGuid(),
                 ItemType = item.ItemType,
                 Price = item.Price
             };
-            return CreateItem(playerId, item);
+            return _itemrepository.CreateItem(playerId, newitem);
         }
         [HttpGet]
         [Route("{itemId}")]
         public Task<Item> GetItem(Guid playerId, Guid itemId){
-            return GetItem(playerId,itemId);
+            return _itemrepository.GetItem(playerId,itemId);
         }
         [HttpGet]
         [Route("")]
         public Task<Item[]> GetAllItems(Guid playerId){
-            return GetAllItems(playerId);
+            return _itemrepository.GetAllItems(playerId);
         }
         [HttpPost]
         [Route("{itemId}")]
         public Task<Item> UpdateItem(Guid playerId, Guid itemId, UpdateItem item){
-            return UpdateItem(playerId, itemId, item);
+            return _itemrepository.UpdateItem(playerId, itemId, item);
         }
         [HttpDelete]
         [Route("{itemId}")]
         public Task<Item> DeleteItem(Guid playerId, Item item){
-            return DeleteItem(playerId, item);
+            return _itemrepository.DeleteItem(playerId, item);
         }
 
 

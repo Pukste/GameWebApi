@@ -1,3 +1,3 @@
-{"Id":"77f25325-9e41-4d96-a1bf-f54d4180394f","Name":"test","Score":0,"Level":0,"IsBanned":false,"CreationTime":"0001-01-01T00:00:00"}
-{"Id":"5e2d9a9f-db82-44e8-82cc-cf2c9c29d77c","Name":"test","Score":0,"Level":0,"IsBanned":false,"CreationTime":"0001-01-01T00:00:00"}
-{"Id":"2988918a-cfd7-4337-b821-bf79beb0a7f7","Name":"test","Score":0,"Level":0,"IsBanned":false,"CreationTime":"0001-01-01T00:00:00"}
+{"Id":"77f25325-9e41-4d96-a1bf-f54d4180394f","Name":"test","Score":0,"Level":0,"IsBanned":false,"CreationTime":"0001-01-01T00:00:00","Items":[{"Id":"76a447c1-9c41-4950-8db2-c851d111c553","Price":0,"ItemType":0},{"Id":"92acaa22-b6b1-439b-a125-94c09e6ac2f4","Price":0,"ItemType":1},{"Id":"9b05886d-7b04-4277-b4fe-1bb21776a717","Price":20,"ItemType":1}]}
+{"Id":"5e2d9a9f-db82-44e8-82cc-cf2c9c29d77c","Name":"test","Score":0,"Level":0,"IsBanned":false,"CreationTime":"0001-01-01T00:00:00","Items":[]}
+{"Id":"2988918a-cfd7-4337-b821-bf79beb0a7f7","Name":"test","Score":0,"Level":0,"IsBanned":false,"CreationTime":"0001-01-01T00:00:00","Items":[]}
