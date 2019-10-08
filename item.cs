@@ -1,19 +1,35 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace gamewebapi
 {
-    public class Item
+    public class Item : IValidatableObject
     {
         
         public Guid Id { get; set; }
+
         [Range(1,99)]
         public int Level {get; set;}
         public int Price { get; set; }
-        [Range(0,2)]
-        public ItemType ItemType { get; set; }
         
-        [NewerThan]
+        public ItemType itemType { get; set; }
+        
+        
         public DateTime CreationTime { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if(CreationTime<DateTime.Today){
+                yield return new ValidationResult(
+                    "CreationDate is in the past"
+                );
+            }
+             if(!(itemType.Equals(ItemType.HealthKit)|| itemType.Equals(ItemType.Relic) || itemType.Equals(ItemType.Weapon))){
+                yield return new ValidationResult(
+                    "Item type does not match parameters"
+                );
+            }
+        }
     }
 }

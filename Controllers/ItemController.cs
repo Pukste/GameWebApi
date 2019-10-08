@@ -1,12 +1,13 @@
 using System;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace gamewebapi
 {
     [Route("api/players/{playerId}/items/")]
     [ApiController]
-    public class ItemController{
+    public class ItemController : ControllerBase{
 
         private IRepository _itemrepository;
 
@@ -14,14 +15,19 @@ namespace gamewebapi
 
         [HttpPost]
         [Route("")]
+        
         public Task<Item> CreateItem(Guid playerId, NewItem item){
             var newitem = new Item(){
                 Id = Guid.NewGuid(),
-                ItemType = item.ItemType,
+                Level = item.Level,
+                itemType = item.ItemType,
                 Price = item.Price,
                 CreationTime = DateTime.Now
             };
-            return _itemrepository.CreateItem(playerId, newitem);
+            if(this.TryValidateModel(newitem)){
+                return _itemrepository.CreateItem(playerId, newitem);
+            }
+            throw new Exception("Item range invalid");
         }
         [HttpGet]
         [Route("{itemId}")]
