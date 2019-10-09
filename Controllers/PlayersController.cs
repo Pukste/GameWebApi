@@ -20,11 +20,11 @@ namespace gamewebapi
         }
          
         
-        [HttpGet]
-        public async Task<IActionResult> GetPlayerWithName(string name){
-            name = HttpContext.Request.Query["name"][0];
-            return Ok(await _repository.GetPlayerWithName(name));
-        }
+        // [HttpGet]
+        // public async Task<IActionResult> GetPlayerWithName(string name){
+        //     name = HttpContext.Request.Query["name"][0];
+        //     return Ok(await _repository.GetPlayerWithName(name));
+        // }
         
         [HttpGet]
         [Route("itemtypequery/{itemtype}")]

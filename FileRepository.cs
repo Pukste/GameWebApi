@@ -83,7 +83,7 @@ namespace gamewebapi{
         public Task<Item> CreateItem(Guid playerId, Item item)
         {
             Task<Player> player = Get(playerId);
-            if(player.Result.Level < 3)
+            if(player.Result.Level < 3 && item.itemType.Equals(ItemType.Sword))
             {
                 throw new RequirementException();
             }

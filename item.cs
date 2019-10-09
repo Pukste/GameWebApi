@@ -20,7 +20,7 @@ namespace gamewebapi
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if(CreationTime<=DateTime.Now){
+            if(CreationTime>=DateTime.Now){
                 yield return new ValidationResult(
                     "CreationDate is in the past"
                 );
