@@ -6,7 +6,7 @@ namespace gamewebapi
 {
     [Route("api/players/")]
     [ApiController]
-    public class PlayerController{
+    public class PlayerController :Controller{
 
         private IRepository _repository;
 
@@ -18,11 +18,14 @@ namespace gamewebapi
         public async Task<Player> Get(Guid id){
             return await _repository.Get(id);
         }
+         
+        
         [HttpGet]
-        [Route("{name:string}")]
-        public async Task<Player> GetPlayerWithName(string name){
-            return await _repository.GetPlayerWithName(name);
+        public async Task<IActionResult> GetPlayerWithName(string name){
+            name = HttpContext.Request.Query["name"][0];
+            return Ok(await _repository.GetPlayerWithName(name));
         }
+        
         [HttpGet]
         [Route("itemtypequery/{itemtype}")]
         public async Task<Player[]> GetPlayersWithItemType(ItemType itemType){
@@ -34,6 +37,11 @@ namespace gamewebapi
             return await _repository.GetPlayersWithScore(score);
         }
 
+        [HttpPost]
+        [Route("{playerId}&{score}")]
+        public async Task<Player> IncrementPlayerScore(Guid id, int increment){
+            return await _repository.IncrementPlayerScore(id,increment);
+        }
         [HttpGet]
         [Route("")]
         public Task<Player[]> GetAll(){
