@@ -14,10 +14,26 @@ namespace gamewebapi
 
 
         [HttpGet]
-        [Route("{playerId}")]
+        [Route("{playerId:int}")]
         public async Task<Player> Get(Guid id){
             return await _repository.Get(id);
         }
+        [HttpGet]
+        [Route("{name:string}")]
+        public async Task<Player> GetPlayerWithName(string name){
+            return await _repository.GetPlayerWithName(name);
+        }
+        [HttpGet]
+        [Route("queries/{itemtype}")]
+        public async Task<Player[]> GetPlayersWithItemType(ItemType itemType){
+            return await _repository.GetPlayersWithItemType(itemType);
+        }
+        [HttpGet]
+        [Route("queries/{score}")]
+        public async Task<Player[]> GetPlayersWithScore(int score){
+            return await _repository.GetPlayersWithScore(score);
+        }
+
         [HttpGet]
         [Route("")]
         public Task<Player[]> GetAll(){

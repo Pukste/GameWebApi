@@ -184,5 +184,21 @@ namespace gamewebapi{
             throw new NotFoundException();
         }
 
+        public Task<Player[]> GetPlayersWithScore(int score){
+            throw new NotImplementedException();
+        }
+
+        public Task<Player> GetPlayerWithName(string name){
+            throw new NotImplementedException();
+        }
+
+        public Task<Player[]> GetPlayersWithItemType(ItemType itemType){
+            throw new NotImplementedException();
+        }
+
+        public Task<Player> IncrementPlayerScore(Guid id, int increment){
+            throw new NotImplementedException();
+        }
+
     }
 }

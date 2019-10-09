@@ -27,8 +27,8 @@ namespace gamewebapi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddSingleton<IRepository, FileRepository>();
-            //services.AddSingleton<IRepository, MongoDbRepository>();
+            //services.AddSingleton<IRepository, FileRepository>();
+            services.AddSingleton<IRepository, MongoDbRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -49,9 +49,16 @@ namespace gamewebapi
             return player;
         }
  
-        // not working yet..
+        // Doesnt return anything atm :(
         public async Task<Item> DeleteItem(Guid id, Guid itemId)
         {
+
+            var filterone = Builders<Player>.Filter.ElemMatch<Item>(p => p.Items, Builders<Item>.Filter.Eq(f => f.Id, itemId));
+            var pull = Builders<Player>.Update.PullFilter(p => p.Items, Builders<Item>.Filter.Eq(f => f.Id, itemId));
+            await _collection.UpdateOneAsync(filterone, pull);
+            Item removingerror = new Item();
+            return removingerror;
+            /* 
             var filter = Builders<Player>.Filter.Eq(p => p.Id, id);
             var playerCursor = await _collection.FindAsync(filter);
             Player player = await playerCursor.FirstAsync();
@@ -66,6 +73,7 @@ namespace gamewebapi
             var update = Builders<Player>.Update.PullFilter(p =>p.Items, f=>f.Id == itemId);
             await _collection.FindOneAndUpdateAsync(p => p.Id == id,update);
             return olditem;
+            */
         }
  
         public async Task<Player> Get(Guid id)
@@ -90,7 +98,7 @@ namespace gamewebapi
                 }
             }
  
-            return null;
+            throw new NotFoundException();
         }
  
         public Task<Player[]> GetAll()
@@ -120,7 +128,11 @@ namespace gamewebapi
         // replacing the current item completely atm also not working.       
         public async Task<Item> UpdateItem(Guid id, Guid itemId, Item updateItem) 
         {
- 
+        
+            
+            
+        
+            
             var filter = Builders<Player>.Filter.Eq(p => p.Id, id);
             var playerCursor = await _collection.FindAsync(filter);
             Player player = await playerCursor.FirstAsync();
@@ -136,9 +148,41 @@ namespace gamewebapi
                     return oldItem;
                 }
             }
- 
-            return null;
+
+            throw new NotFoundException();
+        
         }
+
+        //Queries
+         public async Task<Player[]> GetPlayersWithScore(int score){
+            var filter = Builders<Player>.Filter.Gte(p => p.Score, score);
+            var players = await _collection.Find(filter).ToListAsync();
+            return players.ToArray();
+        }
+
+        public async Task<Player> GetPlayerWithName(string name){
+            var filter = Builders<Player>.Filter.Eq(p => p.Name, name);
+            return await _collection.Find(filter).FirstAsync();
+        }
+
+        public async Task<Player[]> GetPlayersWithItemType(ItemType itemType){
+            var filter = Builders<Player>.Filter.ElemMatch<Item>(p => p.Items, Builders<Item>.Filter.Eq(i => i.itemType, itemType));            
+            var players = await _collection.Find(filter).ToListAsync();
+            return players.ToArray();
+        }
+
+        public async Task<Player> IncrementPlayerScore(Guid id, int increment){
+            var filter = Builders<Player>.Filter.Eq(p => p.Id, id);
+            var update = Builders<Player>.Update.Inc(p => p.Score, increment);
+            var result = await _collection.FindOneAndUpdateAsync(filter,update);
+            return result;
+        }
+
+
+
+
+
+
     }
 }
 
