@@ -57,7 +57,7 @@ namespace gamewebapi{
                     return Task.FromResult(p);
                 }
             }
-            throw new KeyNotFoundException();
+            throw new NotFoundException();
         }
         public Task<Player> Delete(Guid id){
             Player deletedPlayer = new Player();
@@ -109,7 +109,7 @@ namespace gamewebapi{
                     }     
                 }
             }
-            throw new KeyNotFoundException();
+            throw new NotFoundException();
         }
 
         public Task<Item[]> GetAllItems(Guid playerId)
@@ -121,7 +121,7 @@ namespace gamewebapi{
                     return Task.FromResult(p.Items.ToArray());
                 }
             }
-            throw new KeyNotFoundException();
+            throw new NotFoundException();
         }
 
         public Task<Item> UpdateItem(Guid playerId,Guid itemId, Item item)
@@ -146,7 +146,7 @@ namespace gamewebapi{
             }
             
             
-            throw new KeyNotFoundException();
+            throw new NotFoundException();
         }
 
         public Task<Item> DeleteItem(Guid playerId, Guid itemId)
@@ -181,7 +181,7 @@ namespace gamewebapi{
                 }
                 File.WriteAllLines("game_dev.txt", newarray);
             }
-            throw new KeyNotFoundException();
+            throw new NotFoundException();
         }
 
     }
