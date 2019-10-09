@@ -82,18 +82,29 @@ namespace gamewebapi{
 
         public Task<Item> CreateItem(Guid playerId, Item item)
         {
-            string[] _repository = File.ReadAllLines("game_dev.txt", Encoding.Default);
-            for(int i = 0; i<_repository.Length; i++){
-                var p =JsonConvert.DeserializeObject<Player>(_repository[i]);
-                if(p.Id == playerId){
-                    p.Items.Add(item);
+            Task<Player> player = Get(playerId);
+            if(player.Result.Level < 3)
+            {
+                throw new RequirementException();
+            }
+            else
+            {
+                string[] _repository = File.ReadAllLines("game_dev.txt", Encoding.Default);
+                for(int i = 0; i<_repository.Length; i++){
+                    var p =JsonConvert.DeserializeObject<Player>(_repository[i]);
+                    if(p.Id == playerId){
+                        p.Items.Add(item);
+                        
+                    }
+                    _repository[i] = JsonConvert.SerializeObject(p);
                     
                 }
-                _repository[i] = JsonConvert.SerializeObject(p);
-                
+                File.WriteAllLines("game_dev.txt", _repository);
+                return Task.FromResult(item);
             }
-            File.WriteAllLines("game_dev.txt", _repository);
-            return Task.FromResult(item);
+
+
+
         }
 
         public Task<Item> GetItem(Guid playerId, Guid itemId)

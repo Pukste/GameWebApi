@@ -5,5 +5,6 @@ namespace gamewebapi
         Weapon,
         Relic,
         HealthKit,
+        Sword,
     }
 }

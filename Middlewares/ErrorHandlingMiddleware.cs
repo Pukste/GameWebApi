@@ -26,6 +26,10 @@ namespace gamewebapi.Middlewares
             {
                 context.Response.StatusCode = 404;
 	        }
+            catch(RequirementException)
+            {
+                context.Response.StatusCode = 400;
+            }
 	    }
     }
 }
