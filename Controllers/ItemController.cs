@@ -15,7 +15,7 @@ namespace gamewebapi
 
         [HttpPost]
         [Route("")]
-        
+        [ExceptionFilter]
         public Task<Item> CreateItem(Guid playerId, NewItem item){
             var newitem = new Item(){
                 Id = Guid.NewGuid(),
