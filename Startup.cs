@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using gamewebapi.Middlewares;
 
 namespace gamewebapi
 {
@@ -26,8 +27,8 @@ namespace gamewebapi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            //services.AddSingleton<IRepository, FileRepository>();
-            services.AddSingleton<IRepository, MongoDbRepository>();
+            services.AddSingleton<IRepository, FileRepository>();
+            //services.AddSingleton<IRepository, MongoDbRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +43,7 @@ namespace gamewebapi
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             
             app.UseMvc();
         }
