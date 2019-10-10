@@ -6,7 +6,7 @@ namespace gamewebapi
 {
     [Route("api/players/")]
     [ApiController]
-    public class PlayerController :Controller{
+    public class PlayerController :ControllerBase{
 
         private IRepository _repository;
 
@@ -20,32 +20,40 @@ namespace gamewebapi
         }
          
         
-        [HttpGet]
+
         public async Task<IActionResult> GetPlayerWithName(string name){
-            name = HttpContext.Request.Query["name"][0];
+            
             return Ok(await _repository.GetPlayerWithName(name));
         }
         
-        [HttpGet]
-        [Route("itemtypequery/{itemtype}")]
+        
         public async Task<Player[]> GetPlayersWithItemType(ItemType itemType){
             return await _repository.GetPlayersWithItemType(itemType);
         }
-        [HttpGet]
-        [Route("scorequery/{score}")]
+        
         public async Task<Player[]> GetPlayersWithScore(int score){
             return await _repository.GetPlayersWithScore(score);
         }
 
-        [HttpPost]
-        [Route("{playerId}&{score}")]
+        
         public async Task<Player> IncrementPlayerScore(Guid id, int increment){
             return await _repository.IncrementPlayerScore(id,increment);
         }
         [HttpGet]
         [Route("")]
-        public Task<Player[]> GetAll(){
-            return _repository.GetAll();
+        public async Task<IActionResult> GetAll(){
+            if(!String.IsNullOrEmpty(HttpContext.Request.Query["name"])){
+                string name = HttpContext.Request.Query["name"];
+                return Ok(await GetPlayerWithName(name));
+            }
+            if(!String.IsNullOrEmpty(HttpContext.Request.Query["score"])){
+                int score = int.Parse(HttpContext.Request.Query["score"]);
+                return Ok(await GetPlayersWithScore(score));
+            }
+            if(!String.IsNullOrEmpty(HttpContext.Request.Query["itemtype"])){
+                ItemType itemType = (ItemType)int.Parse(HttpContext.Request.Query["itemtype"]);
+            }
+            return Ok(await _repository.GetAll());
         }
         [HttpPost]
         [Route("")]
