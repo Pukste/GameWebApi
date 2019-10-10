@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using System.Globalization;
 using System.Collections.Generic;
 using System;
+using System.IO;
+using System.Text;
 
 namespace gamewebapi.Middlewares
 {
@@ -26,6 +28,11 @@ namespace gamewebapi.Middlewares
             {
                 context.Response.StatusCode = 404;
 	        }
+            catch(RequirementException)
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync("Player isn't high enough leveled to obtain a sword");
+            }
 	    }
     }
 }

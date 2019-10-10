@@ -20,12 +20,12 @@ namespace gamewebapi
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if(CreationTime<=DateTime.Now){
+            if(CreationTime>=DateTime.Now){
                 yield return new ValidationResult(
                     "CreationDate is in the past"
                 );
             }
-             if(!(itemType.Equals(ItemType.HealthKit)|| itemType.Equals(ItemType.Relic) || itemType.Equals(ItemType.Weapon))){
+             if(!(itemType.Equals(ItemType.HealthKit)|| itemType.Equals(ItemType.Relic) || itemType.Equals(ItemType.Weapon) || itemType.Equals(ItemType.Sword))){
                 yield return new ValidationResult(
                     "Item type does not match parameters"
                 );
