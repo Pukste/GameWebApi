@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Koulu\\GameWebApi\\gamewebapi.csproj": {}
+    "C:\\Koulu\\AdminGameWebApi\\gamewebapi.csproj": {}
   },
   "projects": {
-    "C:\\Koulu\\GameWebApi\\gamewebapi.csproj": {
+    "C:\\Koulu\\AdminGameWebApi\\gamewebapi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Koulu\\GameWebApi\\gamewebapi.csproj",
+        "projectUniqueName": "C:\\Koulu\\AdminGameWebApi\\gamewebapi.csproj",
         "projectName": "gamewebapi",
-        "projectPath": "C:\\Koulu\\GameWebApi\\gamewebapi.csproj",
+        "projectPath": "C:\\Koulu\\AdminGameWebApi\\gamewebapi.csproj",
         "packagesPath": "C:\\Users\\Mörkö\\.nuget\\packages\\",
-        "outputPath": "C:\\Koulu\\GameWebApi\\obj\\",
+        "outputPath": "C:\\Koulu\\AdminGameWebApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
