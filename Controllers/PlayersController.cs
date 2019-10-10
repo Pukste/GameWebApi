@@ -50,9 +50,9 @@ namespace gamewebapi
                 int score = int.Parse(HttpContext.Request.Query["score"]);
                 return Ok(await GetPlayersWithScore(score));
             }
-            if(!String.IsNullOrEmpty(HttpContext.Request.Query["itemtype"])){
+            /*if(!String.IsNullOrEmpty(HttpContext.Request.Query["itemtype"])){
                 ItemType itemType = (ItemType)int.Parse(HttpContext.Request.Query["itemtype"]);
-            }
+            }*/
             return Ok(await _repository.GetAll());
         }
         [HttpPost]
