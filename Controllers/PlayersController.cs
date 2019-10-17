@@ -25,12 +25,7 @@ namespace gamewebapi
             
             return Ok(await _repository.GetPlayerWithName(name));
         }
-        // [HttpGet]
-        // public async Task<IActionResult> GetPlayerWithName(string name){
-        //     name = HttpContext.Request.Query["name"][0];
-        //     return Ok(await _repository.GetPlayerWithName(name));
-        // }
-        
+     
         
         public async Task<Player[]> GetPlayersWithItemType(ItemType itemType){
             return await _repository.GetPlayersWithItemType(itemType);
@@ -47,6 +42,7 @@ namespace gamewebapi
         [HttpGet]
         [Route("")]
         public async Task<IActionResult> GetAll(){
+            
             if(!String.IsNullOrEmpty(HttpContext.Request.Query["name"])){
                 string name = HttpContext.Request.Query["name"];
                 return Ok(await GetPlayerWithName(name));
@@ -55,10 +51,14 @@ namespace gamewebapi
                 int score = int.Parse(HttpContext.Request.Query["score"]);
                 return Ok(await GetPlayersWithScore(score));
             }
-            /*if(!String.IsNullOrEmpty(HttpContext.Request.Query["itemtype"])){
-                ItemType itemType = (ItemType)int.Parse(HttpContext.Request.Query["itemtype"]);
-            }*/
+            if(!String.IsNullOrEmpty(HttpContext.Request.Query["id"+"increment"])){
+                Guid id = Guid.Parse(HttpContext.Request.Query["id"]);
+                int increment = int.Parse(HttpContext.Request.Query["increment"]);
+                return Ok(await IncrementPlayerScore(id, increment));
+            }
+            // en osannu kutsua itemtype, mut on se implementattu muuten :(
             return Ok(await _repository.GetAll());
+            
         }
         [HttpPost]
         [Route("")]
